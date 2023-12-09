@@ -181,7 +181,7 @@ class Agent:
         print(decision)
 
     def get_position(self):
-        return (self.x, self.y)
+        return self.x, self.y
 
     def get_direction(self):
         return self.direction

@@ -15,8 +15,8 @@ class Arena:
     Attributes:
         width: width of the arena
         height: height of the arena
-        goal_x: x coordinate of the goal (relative to window)
-        goal_y: y coordinate of the goal (relative to window)
+        goal_x: x coordinate of the goal 
+        goal_y: y coordinate of the goal
         goal_width: width of the goal
         goal_height: height of the goal
         agents: list of agents in the arena
@@ -35,16 +35,6 @@ class Arena:
         self.start_y = 475
         self.rng = rng # global random numpy generator
 
-    # draws arena and goal
-    def draw(self, screen):
-        """Draws the arena and the goal."""
-        pygame.draw.rect(screen, 
-                         (255, 255, 255), 
-                         (0, 0, self.width, self.height))
-        pygame.draw.rect(screen,
-                         (144, 238, 144),
-                         (self.goal_x, self.goal_y, self.goal_width, self.goal_height))
-
     def change_goal(self, goal_x, goal_y, goal_width, goal_height):
         """Changes the goal."""
         self.goal_x = goal_x
@@ -52,24 +42,12 @@ class Arena:
         self.goal_width = goal_width
         self.goal_height = goal_height
 
-    def erase_old_agents(self, screen):
-        screen.fill((0, 0, 0))
-        self.draw(screen)
-
     def add_agent(self, agent=None):
         """Adds an agent to the arena."""
         if agent == None:
             agent = Agent(self, self.start_x, self.start_y)
         # print(f"Adding agent with brain: {agent.brain}")
         self.agents.append(agent)
-
-
-    def draw_agents(self, screen):
-        """Draws all the agents in the arena."""
-        for agent in self.agents:
-            pygame.draw.circle(screen, (255, 0, 0), (agent.get_position()), 5)
-            # draws a short line indicating the agent's direction
-            pygame.draw.line(screen, (255, 0, 0), (agent.get_position()), agent.end_of_velocity_line(), 1)
 
     def update_agents(self):
         """Updates the position of all the agents in the arena."""
@@ -86,7 +64,6 @@ class Arena:
     
     def check_goal(self):
         """Check if an agent has reached the goal and remove from the arena if so."""
-
         for agent in self.agents:
             if agent.x > self.goal_x and agent.x < self.goal_x + self.goal_width:
                 if agent.y > self.goal_y and agent.y < self.goal_y + self.goal_height:
@@ -149,7 +126,7 @@ class Arena:
         """Resets the arena."""
         if random:
             x = self.rng.integers(200, self.width-200)
-            y = self.rng.integers(400, self.height-200)
+            y = self.rng.integers(200, self.height-200)
             direction = self.rng.integers(0,359)
         else:
             x = self.start_x
